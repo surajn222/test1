@@ -1,0 +1,147 @@
+
+<html>
+<head>
+<script language="JavaScript" type="text/javascript">
+
+window.onload = function fonload(){
+localStorage.s1 = "Select " + "*" + " from players";
+localStorage.s2 = " order by baseprice asc";
+}
+
+
+m1 = "Select Attacker from players"; 
+m2 = "Select Defender from players";
+
+n1 = " order by baseprice asc";
+n2 = " order by baseprice desc";
+
+
+
+function attacker()
+   {
+   localStorage.s1 = m1;
+   combo();
+    ajax_post();
+}
+
+function defender()
+   {
+   localStorage.s1 = m2;
+   combo();
+    ajax_post();
+}
+
+document.write(localStorage.s1);
+
+function baseprice()
+   {
+   localStorage.s2 = n2;
+   combo();
+    ajax_post();
+}
+
+function combo(){
+c1 = localStorage.s1.concat(localStorage.s2);
+ document.getElementById('onloadtag').innerHTML=c1;
+ }
+
+function ajax_post(){
+
+    // Create our XMLHttpRequest object
+    var hr = new XMLHttpRequest();
+    // Create some variables we need to send to our PHP file
+    var url = "my_parse_file.php";
+    
+    var vars = "combinationvariable=" + c1;
+    
+    hr.open("POST", url, true);
+    // Set content type header information for sending url encoded variables in the request
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Access the onreadystatechange event for the XMLHttpRequest object
+    hr.onreadystatechange = function() {
+   if(hr.readyState == 4 && hr.status == 200) {
+   var return_data = hr.responseText;
+document.getElementById("status").innerHTML = return_data;
+   }
+    }
+    // Send the data to PHP now... and wait for response to update the status div
+    hr.send(vars); // Actually execute the request
+    document.getElementById("status").innerHTML = "processing...";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</head>
+<body>
+<h2>Ajax Post to PHP and Get Return Data</h2>
+<div id="onloadtag" onClick="javascript:ajax_postonload();"> DIV TAG ONLOAD</div>
+
+<div onClick="javascript:attacker();"> ATTACKER</div>
+<div onClick="javascript:defender();"> DEFENDER</div>
+<div onClick="javascript:baseprice();">BASEPRICE</div>
+
+<div onClick="javascript:ajax_post();">Submit</div>
+<br /><br />
+<div id="status"></div>
+</body>
+</html>
